@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <a class="forkme" href="https://github.com/handplant/vue-starwars"><img src="./assets/forkme.png" alt="github"></a>
         <div class="container">
             <div class="logo">
                 <router-link to="/"><img src="./assets/starwars.png" alt="logo"></router-link>
@@ -51,6 +52,11 @@ body {
     a {
         text-decoration: none;
     }
+}
+
+.forkme {
+    position: absolute;
+    right: 0;
 }
 
 .logo {
