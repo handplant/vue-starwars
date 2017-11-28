@@ -10,5 +10,9 @@ export default {
     getId(url) {
         const url_array = url.split('/')
         return url_array[5]
+    },
+    getType(url) {
+        const url_array = url.split('/')
+        return url_array[4]
     }
 }

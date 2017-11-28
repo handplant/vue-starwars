@@ -5,7 +5,7 @@
         </div>
         <template v-else>
             <div class="item__entry" v-for="(value, key) in item" :key="key">
-                <template v-if="typeof value === 'string'">
+                <template v-if="typeof value === 'string' || typeof value === 'number'">
                     <span class="item__entry-key">{{key | format}}</span>
                     <span class="item__entry-value">{{value}}</span>
                 </template>
@@ -13,7 +13,7 @@
                     <span class="item__entry-key">{{key}}</span>
                     <span class="item__entry-value">
                         <div class="" v-for="url in value" :key="url">
-                            {{url}}
+                            <router-link :to="getInternalUrl(url)">{{url}}</router-link>
                         </div>
                     </span>
                 </template>
@@ -24,13 +24,19 @@
 
 <script>
 import { mapState } from 'vuex'
+import api from '../store/api'
 export default {
     computed: {
         ...mapState({
             type: state => state.route.name.substr(4),
             loading: state => state.loading,
             item: state => state.active
-        })
+        }),
+        getInternalUrl() {
+            return url => {
+                return '/' + api.getType(url) + '/' + api.getId(url)
+            }
+        }
     },
     created() {
         this.$store.dispatch('GET_ITEM', this.type)
@@ -38,11 +44,16 @@ export default {
     beforeDestroy() {
         this.$store.commit('CLEAR_ACTIVE')
     },
+    watch: {
+        $route() {
+            this.$store.dispatch('GET_ITEM', this.type)
+        }
+    },
     filters: {
-        format: function (value) {
+        format: function(value) {
             if (!value) return ''
             value = value.toString()
-            return value.replace('_',' ')
+            return value.replace('_', ' ')
         }
     }
 }
