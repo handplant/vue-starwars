@@ -9,11 +9,15 @@
                     <span class="item__entry-key">{{key | format}}</span>
                     <span class="item__entry-value">{{value}}</span>
                 </template>
+                <template v-else-if="!value.length">
+                    <span class="item__entry-key">{{key | format}}</span>
+                    <span class="item__entry-value">no data</span>
+                </template>
                 <template v-else>
                     <span class="item__entry-key">{{key}}</span>
                     <span class="item__entry-value">
                         <div class="" v-for="url in value" :key="url">
-                            <router-link :to="getInternalUrl(url)">{{url}}</router-link>
+                            <router-link :to="getInternalUrl(url)"><filmlink :url="url"></filmlink></router-link>
                         </div>
                     </span>
                 </template>
@@ -25,7 +29,9 @@
 <script>
 import { mapState } from 'vuex'
 import api from '../store/api'
+import filmlink from '../components/filmlink';
 export default {
+    components: { filmlink },
     computed: {
         ...mapState({
             type: state => state.route.name.substr(4),
