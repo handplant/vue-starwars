@@ -63,7 +63,7 @@ const mutations = {
         state.active = null
     },
     SET_ITEM(state, {  response , key }) {
-        state.items[key] = response
+      Vue.set(state.items, key, response)
     }
 }
 const actions = {
@@ -108,7 +108,7 @@ const actions = {
                 commit('SET_LOADING', false)
             })
     },
-    GET_ITEM2({ state, commit }, { type, id } ) {
+    LOAD_ITEM({ state, commit }, { type, id } ) {
         var key = type + id;
         if (state.items[key]){
             return state.items[key] ;

@@ -7,7 +7,7 @@
             <div class="item__entry" v-for="(value, key) in item" :key="key">
                 <template v-if="typeof value === 'string' || typeof value === 'number'">
                     <span class="item__entry-key">{{key | format}}</span>
-                    <span class="item__entry-value">{{value}}</span>
+                    <span class="item__entry-value"><value :value="value"></value></span>
                 </template>
                 <template v-else-if="!value.length">
                     <span class="item__entry-key">{{key | format}}</span>
@@ -17,7 +17,7 @@
                     <span class="item__entry-key">{{key}}</span>
                     <span class="item__entry-value">
                         <div class="" v-for="url in value" :key="url">
-                            <router-link :to="getInternalUrl(url)"><filmlink :url="url"></filmlink></router-link>
+                           <value :value="url"></value>
                         </div>
                     </span>
                 </template>
@@ -29,20 +29,15 @@
 <script>
 import { mapState } from 'vuex'
 import api from '../store/api'
-import filmlink from '../components/filmlink';
+import value from '../components/value';
 export default {
-    components: { filmlink },
+    components: { value },
     computed: {
         ...mapState({
             type: state => state.route.name.substr(4),
             loading: state => state.loading,
             item: state => state.active
-        }),
-        getInternalUrl() {
-            return url => {
-                return '/' + api.getType(url) + '/' + api.getId(url)
-            }
-        }
+        })
     },
     created() {
         this.$store.dispatch('GET_ITEM', this.type)
