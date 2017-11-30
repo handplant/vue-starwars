@@ -8,11 +8,17 @@ export default {
             .catch(error => Promise.reject(error))
     },
     getId(url) {
-        const url_array = url.split('/')
-        return url_array[5]
+        if (url.length) {
+            const url_array = url.split('/')
+            return url_array[5]
+        }
+        return false;
     },
     getType(url) {
-        const url_array = url.split('/')
-        return url_array[4]
+        if (url.length) {
+          const url_array = url.split('/')
+          return url_array[4]
+        }
+        return false;
     }
 }
