@@ -38,7 +38,8 @@ const state = {
         next: null,
         count: null
     },
-    active: null
+    active: null,
+    items: {}
 }
 const mutations = {
     SET_LOADING(state, payload) {
@@ -60,6 +61,9 @@ const mutations = {
     },
     CLEAR_ACTIVE(state) {
         state.active = null
+    },
+    SET_ITEM(state, {  response , key }) {
+      Vue.set(state.items, key, response)
     }
 }
 const actions = {
@@ -102,6 +106,20 @@ const actions = {
             .catch(error => {
                 commit('SET_ERROR', error)
                 commit('SET_LOADING', false)
+            })
+    },
+    LOAD_ITEM({ state, commit }, { type, id } ) {
+        var key = type + id;
+        if (state.items[key]){
+            return state.items[key] ;
+        }
+        return api
+            .get('https://swapi.co/api/' + type + '/' + id + '/?format=json')
+            .then(response => {
+                commit('SET_ITEM', { response, key })
+            })
+            .catch(error => {
+                commit('SET_ERROR', error)
             })
     }
 }
