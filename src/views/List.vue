@@ -5,7 +5,7 @@
         </div>
         <template v-else>
             <div class="list__count">
-                {{count}}
+                count {{count}}
             </div>
             <transition-group tag="ul" class="list__result" name="list">
                 <li class="list_item" v-for="item in result" :key="item.url">

@@ -35,6 +35,11 @@ export default {
 </script>
 
 <style lang="scss">
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
 html {
     height: 100%;
 }
@@ -46,6 +51,11 @@ body {
     font-size: 15px;
     line-height: 1.6;
     overflow-x: hidden;
+}
+
+button {
+    font-size: 15px;
+    line-height: 1.6;
 }
 
 #app {
