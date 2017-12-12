@@ -7,7 +7,7 @@
             <div class="item__entry" v-for="(value, key) in item" :key="key">
                 <template v-if="typeof value === 'string' || typeof value === 'number'">
                     <span class="item__entry-key">{{key | format}}</span>
-                    <span class="item__entry-value"><value :value="value"></value></span>
+                    <span class="item__entry-value"><item-link :link="value"></item-link></span>
                 </template>
                 <template v-else-if="!value.length">
                     <span class="item__entry-key">{{key | format}}</span>
@@ -17,7 +17,7 @@
                     <span class="item__entry-key">{{key}}</span>
                     <span class="item__entry-value">
                         <div class="" v-for="url in value" :key="url">
-                           <value :value="url"></value>
+                           <item-link :link="url"></item-link>
                         </div>
                     </span>
                 </template>
@@ -29,9 +29,9 @@
 <script>
 import { mapState } from 'vuex'
 import api from '../store/api'
-import value from '../components/value';
+import ItemLink from '../components/ItemLink'
 export default {
-    components: { value },
+    components: { ItemLink },
     computed: {
         ...mapState({
             type: state => state.route.name.substr(4),
